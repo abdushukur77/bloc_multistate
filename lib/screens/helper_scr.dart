@@ -19,7 +19,7 @@ class HelperScreen extends StatelessWidget {
 
             }));
 
-          }, child: Text("Timer ",style: AppTextStyle.interBold.copyWith(
+          }, child: Text("Timer",style: AppTextStyle.interBold.copyWith(
               fontSize: 24,
               color:Colors.white
           ))),
