@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../cubits/timer/time_state_cubit.dart';
-import '../../cubits/timer/timer_cubit.dart';
+import 'package:wakelock/wakelock.dart';
+import '../../../cubits/timer/time_state_cubit.dart';
+import '../../../cubits/timer/timer_cubit.dart';
 import '../time_task_screen/time_task_screen.dart';
 
 class StartTaskScreen extends StatefulWidget {
@@ -23,6 +24,20 @@ class _StartTaskScreenState extends State<StartTaskScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    bool isWakelockEnabled = false;
+
+    void toggleWakelock() {
+      if (isWakelockEnabled) {
+        Wakelock.disable();
+      } else {
+        Wakelock.enable();
+      }
+
+      setState(() {
+        isWakelockEnabled = !isWakelockEnabled;
+      });
+    }
+
     return Scaffold(
         body: BlocBuilder<TimeTaskCubit, TimeTaskState>(
           builder: (BuildContext context, TimeTaskState state) {
@@ -105,7 +120,7 @@ class _StartTaskScreenState extends State<StartTaskScreen> {
                     if(state.finishTime)
                       ScaffoldMessenger(
                         child: AlertDialog(
-                          title: const Text('Finish'),
+                          title: const Text('Vazifa tugadi'),
                           actions: [
                             TextButton(
                               onPressed: () {
@@ -114,6 +129,8 @@ class _StartTaskScreenState extends State<StartTaskScreen> {
                                   context,
                                   MaterialPageRoute(builder: (context) => const TimeTaskScreen()),
                                 );
+
+
                               },
                               child: const Text('OK'),
                             ),

@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../cubits/timer/timer_cubit.dart';
+import 'package:wakelock/wakelock.dart';
+import '../../../cubits/timer/timer_cubit.dart';
 import '../start_time_screen/start_time_screen.dart';
 
 class TimeTaskScreen extends StatefulWidget {
@@ -23,6 +27,25 @@ class _TimeTaskScreenState extends State<TimeTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isWakelockEnabled = false;
+
+    void toggleWakelock() {
+      if (isWakelockEnabled) {
+        Wakelock.disable();
+      } else {
+        Wakelock.enable();
+      }
+
+      setState(() {
+        isWakelockEnabled = !isWakelockEnabled;
+      });
+    }
+    const List<String> _list = [
+      "Kitob o'qish",
+      "Dam olish",
+      'Telegramga kirmay turish',
+      'Reading yechish',
+    ];
     return SafeArea(
       child: Scaffold(
           body: Form(
@@ -93,6 +116,16 @@ class _TimeTaskScreenState extends State<TimeTaskScreen> {
                         ),
                       ),
                     ),
+                CustomDropdown<String>(
+                  hintText: 'Select job role',
+                  items: _list,
+                  initialItem: _list[0],
+                  onChanged: (value) {
+                    _taskController.text=value;
+
+
+                  },
+                ),
                     const SizedBox(
                       height: 70,
                     ),
@@ -123,9 +156,10 @@ class _TimeTaskScreenState extends State<TimeTaskScreen> {
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
-                              content: Text("Soat va Vazifa nomini kiriting!"),
+                                    content: Text("Soat va Vazifa nomini kiriting!"),
                             ));
                           }
+                          toggleWakelock();
                         },
                         borderRadius: BorderRadius.circular(20),
                         child: const Center(

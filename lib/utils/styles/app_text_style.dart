@@ -39,7 +39,7 @@ class AppTextStyle {
   static  TextStyle interBold = TextStyle(
     fontFamily: "Inter",
     fontWeight: FontWeight.w700,
-    fontSize: 16.w,
+    fontSize: 16,
     color: AppColors.c_2A3256,
   );
 

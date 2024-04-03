@@ -1,4 +1,7 @@
-import 'package:bloc_multistate/timer_screen/time_task_screen/time_task_screen.dart';
+import 'package:bloc_multistate/cubits/bank/data_cubit.dart';
+import 'package:bloc_multistate/screens/helper_scr.dart';
+import 'package:bloc_multistate/screens/timer_screen/time_task_screen/time_task_screen.dart';
+import 'package:bloc_multistate/screens/transaction_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,9 +11,8 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => TimeTaskCubit(),
-        ),
+        BlocProvider(create: (_) => TimeTaskCubit()),
+        BlocProvider(create: (_) => BankCubit()),
       ],
       child: const MyApp(),
     ),
@@ -32,6 +34,6 @@ class MyApp extends StatelessWidget {
                     statusBarBrightness: Brightness.dark,
                     statusBarColor: Colors.transparent,
                     statusBarIconBrightness: Brightness.light))),
-        home: const TimeTaskScreen());
+        home: const HelperScreen());
   }
 }
